@@ -10,13 +10,17 @@ router.get('/google',passport.authenticate('google' , {scope:['profile']}))
 // @route GET / auth/google/callback
 router.get('/google/callback',passport.authenticate('google', {failureRedirect:
 '/' }),(req,res)=>{
-    res.redirect('/dashboard')
+  res.redirect('/dashboard')
+  // res.redirect("https://www.congasgh.com")
 })
 // @desc Logout user
 //@route /auth/logout
-router.get('/auth/logout',(req, res)=>{
-    req.logout()
-    res.redirect('/')
-})
+
+router.get('/logout', function(req, res, next) {
+    req.logout(function(err) {
+      if (err) { return next(err); }
+      res.redirect('/');
+    });
+  })
 module.exports = router
 
